@@ -2,6 +2,7 @@ package ru.sberbank.edu;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import ru.sberbank.edu.model.MainObj;
@@ -9,10 +10,13 @@ import ru.sberbank.edu.model.WeaterObj;
 
 import java.time.LocalDateTime;
 
-
+/**
+ * Weather provider
+ */
 public class WeatherProvider {
 
-    private RestTemplate restTemplate = null;
+    private RestTemplate restTemplate;
+    private String apiKey;
 
     /**
      * Download ACTUAL weather info from internet.
@@ -22,10 +26,18 @@ public class WeatherProvider {
      * @param city - city
      * @return weather info or null
      */
+
+    @Autowired
+    public void setRestTemplate(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
+    public void setApiKey(String apiKey) {
+        this.apiKey = apiKey;
+    }
+
     public WeatherInfo get(String city) {
-        restTemplate = new RestTemplate();
         String fooResourceUrl
-                = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=023750cbc3864418bd55bcbbbcc779b8";
+                = "http://api.openweathermap.org/data/2.5/weather?q=" + city + apiKey;
         ResponseEntity<String> response
                 = restTemplate.getForEntity(fooResourceUrl, String.class);
         GsonBuilder builder = new GsonBuilder();

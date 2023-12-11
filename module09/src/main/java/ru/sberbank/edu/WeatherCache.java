@@ -1,20 +1,27 @@
 package ru.sberbank.edu;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Weather cache.
+ */
 public class WeatherCache {
 
-    private Object monitor = new Object();
+    private final Object monitor = new Object();
     private final Map<String, WeatherInfo> cache = new HashMap<>();
-    private final WeatherProvider weatherProvider;
+    private WeatherProvider weatherProvider;
 
     /**
      * Constructor.
      *
      * @param weatherProvider - weather provider
      */
+
+    @Autowired
     public WeatherCache(WeatherProvider weatherProvider) {
         this.weatherProvider = weatherProvider;
     }

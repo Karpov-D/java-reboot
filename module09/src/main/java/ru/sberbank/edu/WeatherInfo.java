@@ -2,6 +2,9 @@ package ru.sberbank.edu;
 
 import java.time.LocalDateTime;
 
+/**
+ * Weather info.
+ */
 public class WeatherInfo {
 
     private String city;
